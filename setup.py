@@ -18,7 +18,7 @@ setup(
     keywords=['prometheus', 'aiohttp'],
     author='Globo.com, Rail Yakup',
     author_email='backstage@corp.globo.com, Rail1996@mail.ru',
-    url='https://github.com/RailYakup/aiohttp-prometheus.git',
+    url='https://github.com/RailYakup/aiohttp-prometheus.git:latest',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
