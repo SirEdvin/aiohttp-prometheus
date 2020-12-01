@@ -11,7 +11,7 @@ Installing
 
 .. code-block:: bash
 
-   pip install aiohttp-prometheus
+   pip install aiohttp-prometheus-client
 
 
 Usage
