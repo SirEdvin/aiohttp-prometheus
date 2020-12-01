@@ -12,13 +12,13 @@ tests_require = [
 
 setup(
     name='aiohttp-prometheus-client',
-    version='latest',
+    version='0.1.1',
     description="HTTP metrics for a aiohttp application",
     long_description=open('README.rst').read(),
     keywords=['prometheus', 'aiohttp'],
     author='Globo.com, Rail Yakup',
     author_email='backstage@corp.globo.com, Rail1996@mail.ru',
-    url='https://github.com/RailYakup/aiohttp-prometheus.git',
+    url='https://github.com/RailYakup/aiohttp-prometheus/archive/0.1.1.tar.gz',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
