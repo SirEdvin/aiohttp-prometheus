@@ -1,3 +1,4 @@
+from aiohttp import web
 from time import time
 from functools import partial
 from prometheus_client import Counter, Histogram
@@ -22,30 +23,30 @@ request_duration = Histogram(
 )
 
 
-class MetricsMiddleware:
+@web.middleware
+async def metrics_middleware(
+    request: web.Request,
+    handler
+) -> web.Response:
+    """Middleware captures request execution statuses,
+    request method, request execution time and increments
+    the corresponding counters"""
 
-    def __init__(self):
-        pass
+    start_time = time()
+    handler_name = handler.__name__
 
-    async def __call__(self, app, handler):
-        return partial(self.middleware, handler)
+    try:
+        response = await handler(request)
+        spent = time() - start_time
+        requests_total.labels(request.method, handler_name, classify_status_code(response.status)).inc()
+        request_duration.labels(request.method, handler_name).observe(spent)
+        return response
+    except:
+        spent = time() - start_time
+        requests_total.labels(request.method, handler_name, '5xx').inc()
+        request_duration.labels(request.method, handler_name).observe(spent)
 
-    async def middleware(self, handler, request):
-        start_time = time()
-        handler_name = handler.__name__
-
-        try:
-            response = await handler(request)
-            spent = time() - start_time
-            requests_total.labels(request.method, handler_name, classify_status_code(response.status)).inc()
-            request_duration.labels(request.method, handler_name).observe(spent)
-            return response
-        except:  # noqa
-            spent = time() - start_time
-            requests_total.labels(request.method, handler_name, '5xx').inc()
-            request_duration.labels(request.method, handler_name).observe(spent)
-
-            raise
+        raise
 
 
 def classify_status_code(status_code):

@@ -1,5 +1,5 @@
 from aiohttp import web
-from aiohttp_prometheus import MetricsMiddleware, MetricsView
+from aiohttp_prometheus import metrics_middleware, MetricsView
 
 
 async def hello(request):
@@ -8,7 +8,7 @@ async def hello(request):
 
 async def test_metrics(aiohttp_client, loop):
     app = web.Application()
-    app.middlewares.append(MetricsMiddleware())
+    app.middlewares.append(metrics_middleware)
     app.router.add_get('/', hello)
     app.router.add_get('/metrics', MetricsView)
 
