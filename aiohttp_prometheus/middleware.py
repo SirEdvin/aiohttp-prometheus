@@ -33,7 +33,8 @@ async def metrics_middleware(
     the corresponding counters"""
 
     start_time = time()
-    handler_name = handler.__name__
+    match_info = request.match_info.route.resource.get_info()
+    handler_name = match_info.get('path', match_info.get('formatter', 'undefined').replace('}', '>').replace('{', '<'))
 
     try:
         response = await handler(request)

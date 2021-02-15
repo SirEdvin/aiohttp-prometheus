@@ -11,8 +11,8 @@ tests_require = [
 ]
 
 setup(
-    name='aiohttp-prometheus-client',
-    version='0.1.1',
+    name='aiohttp-prometheus-swaggered',
+    version='0.1.2',
     description="HTTP metrics for a aiohttp application",
     long_description=open('README.rst').read(),
     keywords=['prometheus', 'aiohttp'],
